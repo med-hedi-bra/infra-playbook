@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+REGISTRY_URL="{{ mohamed_hedi_bra_portfolio_registry_url }}"
+REGISTRY_USER="{{ mohamed_hedi_bra_portfolio_registry_user }}"
+REGISTRY_PASSWORD="{{ mohamed_hedi_bra_portfolio_registry_password }}"
+IMAGE="{{ mohamed_hedi_bra_portfolio_registry_url }}/{{ mohamed_hedi_bra_portfolio_image }}:{{ mohamed_hedi_bra_portfolio_tag }}"
+
+echo "${REGISTRY_PASSWORD}" | docker login "${REGISTRY_URL}" --username "${REGISTRY_USER}" --password-stdin
+
+{% if mohamed_hedi_bra_portfolio_force_pulling_image is defined and mohamed_hedi_bra_portfolio_force_pulling_image %}
+docker compose -f {{ node_home }}/docker_compose_mohamed_hedi_bra_portfolio.yml down
+docker image rmi -f "${IMAGE}" || :
+{% endif %}
+
+echo "y"|docker compose -f {{ node_home }}/docker_compose_mohamed_hedi_bra_portfolio.yml up --force-recreate -d  

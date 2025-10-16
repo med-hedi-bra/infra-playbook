@@ -1,0 +1,19 @@
+---
+gw_gzip_enable: true
+default_max_body_size: 10M
+nginx_conf_path: /etc/nginx
+worker_connections: 2024
+
+gw_websites: []
+gw_upstreams: []
+gw_proxies: []
+gw_auth_files: []
+gw_deny_ips: []
+gw_sn_environments: []
+
+public_api_allow_origin: "*"
+public_api_allow_credentials: "true"
+public_api_http_methods: GET, POST, PATCH ,PUT, DELETE, OPTIONS, HEAD
+public_api_http_headers: DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Length,Access-Control-Allow-Origin,Authorization,Accept,remember-me,xsrf-token,X-XSS-Protection,Referer,sec-ch-ua,sec-ch-ua-mobile,sec-ch-ua-platform,X-User-Token,Sec-GPC,Pragma,sec-fetch-mode,sec-fetch-site,sec-fetch-dest
+public_api_exposed_headers: x-bra-cid
+public_api_control_max_age: 1728000

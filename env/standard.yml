@@ -1,0 +1,20 @@
+node_name: standard
+
+node_home: /root
+
+deploy_user: devops
+
+sudo_users:
+  - username: devops
+    passwd: "no"
+  - username: gitlab-runner
+    passwd: "no"
+
+docker_users:
+  - devops
+
+firewall_allow:
+  - port: 80
+  - port: 22
+  - port: 443
+  - port: 8000

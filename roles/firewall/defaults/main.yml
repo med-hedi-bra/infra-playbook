@@ -1,0 +1,13 @@
+---
+node_home: /root
+old_firewalls:
+  - firewalld
+  - iptables
+
+firewall_systemd: true
+
+firewall_allow:
+  - port: 80
+  - port: 22
+  - port: 443
+

@@ -1,0 +1,75 @@
+---
+- name: Install EPEL repository
+  yum:
+    name: epel-release
+    state: present
+
+# - name: Install common packages
+#   
+#   yum:
+#     name:
+#       - git
+#       - python3-pip
+#       - epel-release
+#       - htop
+#       - jq
+#       - curl
+#       - nmon
+#       - vim
+#       - telnet
+#       - nmap
+#       - iputils
+#       - dos2unix
+#       - snapd
+#       - net-tools
+#       - zip
+#       - wget
+#       - tcpdump
+#       - yum-utils
+#     state: present
+#   when: not ansible_check_mode
+
+# - name: Install hvac pip package
+#   pip:
+#     name: hvac
+#   vars:
+#     ansible_python_interpreter: /usr/bin/python3
+
+# - name: change root password
+#   
+#   user:
+#     name: root
+#     password: "{{ root_password | password_hash('sha512') }}"
+
+- name: Deploy user is created
+  user:
+    name: "{{ deploy_user }}"
+
+- name: Create sudoers file for users
+  copy:
+    content: '{{ item.username }} ALL=(ALL) {{ "NOPASSWD:" if item.passwd == "no" else "" }}ALL'
+    dest: '/etc/sudoers.d/{{ item.username }}'
+    mode: '0440'
+    validate: 'visudo -cf %s'
+  loop: '{{ sudo_users }}'
+  when: sudo_users is defined and sudo_users 
+
+- name: Creation of linux config files
+  template:
+    src: "{{ item.file }}.j2"
+    dest: "{{ item.path }}/{{ item.file }}"
+    mode: "{{ item.mode }}"
+    owner: root
+    group: root
+  with_items:
+    # - { path: "/etc/security", file: "limits.conf", mode: '0644'}
+    # - { path: "/etc", file: "sysctl.conf", mode: '0644'}
+    - { path: "/root", file: ".bashrc", mode: '0755'}
+    - { path: "/home/{{ deploy_user }}", file: ".bashrc", mode: '0755'}
+    # - { path: "/root", file: "ulimit_reset.sh", mode: '0755'}
+    # - { path: "/etc/sysconfig", file: "selinux", mode: '0755'}
+    - { path: "/etc/selinux", file: "config", mode: '0755'}
+
+- name: Disable SELinux
+  command: "setenforce 0"
+  ignore_errors: true

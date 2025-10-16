@@ -1,0 +1,19 @@
+- name: Update all packages
+  dnf:
+    name: "*"
+    state: latest
+    update_cache: yes
+  
+- name: Install common packages
+  dnf:
+    name:
+      - vim
+      - wget
+      - curl
+      - git
+      - htop
+      - net-tools
+      - bind-utils
+      - firewalld
+      - sudo
+    state: present

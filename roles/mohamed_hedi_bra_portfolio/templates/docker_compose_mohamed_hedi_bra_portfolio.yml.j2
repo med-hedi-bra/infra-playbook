@@ -1,0 +1,19 @@
+version: '3'
+services:
+  mohamed_hedi_bra_portfolio:
+    image: {{ mohamed_hedi_bra_portfolio_registry_url }}/{{ mohamed_hedi_bra_portfolio_image }}:{{ mohamed_hedi_bra_portfolio_tag }}
+    container_name: mohamed_hedi_bra_portfolio
+    restart: always
+    ports:
+      - {{ mohamed_hedi_bra_portfolio_port }}:{{ mohamed_hedi_bra_portfolio_container_port }}
+    env_file: 
+      - mohamed_hedi_bra_portfolio.env
+    networks:
+      - mohamed_hedi_bra_portfolio_network
+
+networks:
+  mohamed_hedi_bra_portfolio_network:
+    driver: bridge
+    
+
+

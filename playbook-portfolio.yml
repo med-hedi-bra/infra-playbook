@@ -1,0 +1,13 @@
+- hosts: localhost
+  become: true
+  roles:
+    - base-system
+    - common
+    - ssh-keys
+    - firewall
+    - docker
+    - mohamed_hedi_bra_portfolio
+    - gw-letsencrypt
+    - nginx
+    - gitlab-runner
+    

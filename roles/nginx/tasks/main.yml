@@ -1,0 +1,74 @@
+---
+- name: Check if nginx is installed
+  command: nginx -v
+  register: nginx_installed
+  ignore_errors: true
+  changed_when: false
+
+- block:
+    - name: Install Nginx
+      dnf:
+        name: nginx
+        state: present
+
+    - name: Start and enable Nginx service
+      systemd:
+        name: nginx
+        state: started
+        enabled: yes
+  when: nginx_installed is failed
+
+- name: Create missing directories
+  file:
+    path: "{{ item.path }}"
+    state: directory
+    mode: '0755'
+    owner: 'root'
+    group: 'root'
+    recurse: "{{ item.recurse }}"
+  loop:
+    - { path: "{{ nginx_conf_path }}/auth", recurse: yes}
+
+- name: Create authentication files
+  template:
+    src: "auth.keys.j2"
+    dest: "{{ nginx_conf_path }}/auth/{{ item.name }}"
+    mode: '0644'
+    owner: root
+    group: root
+  with_items: "{{ gw_auth_files }}"
+
+- name: Remove old configuration files
+  file:
+    state: absent
+    path: "{{ item.path }}/{{ item.file }}"
+  with_items:
+    - { path: "{{ nginx_conf_path }}/conf.d", file: "default.conf"}
+
+- name: Creation of nginx config files
+  template:
+    src: "{{ item.file }}.j2"
+    dest: "{{ item.path }}/{{ item.file }}"
+    mode: '0644'
+    owner: root
+    group: root
+  with_items:
+    - { path: "{{ nginx_conf_path }}", file: "jail.conf"}
+    - { path: "{{ nginx_conf_path }}", file: "default_proxy.conf"}
+    - { path: "{{ nginx_conf_path }}", file: "https_server.conf"}
+    - { path: "{{ nginx_conf_path }}", file: "nginx.conf"}
+    - { path: "{{ nginx_conf_path }}", file: "proxy_buffering.conf"}
+    - { path: "{{ nginx_conf_path }}", file: "public_api_proxy.conf"}
+    - { path: "{{ nginx_conf_path }}", file: "tool_proxy.conf"}
+    - { path: "{{ nginx_conf_path }}", file: "websocket_proxy.conf"}
+
+- name: Verify Nginx configuration before restarting
+  command: nginx -t
+  changed_when: false
+
+- name: Restart service nginx
+  systemd:
+    name: nginx
+    state: restarted
+    daemon_reload: yes
+    enabled: yes

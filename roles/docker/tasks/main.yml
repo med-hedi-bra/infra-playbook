@@ -1,0 +1,73 @@
+---
+- name: Check if Docker is installed
+  command: docker --version
+  register: docker_installed
+  ignore_errors: true
+  changed_when: false
+
+- block:
+    - name: Install required packages
+      dnf:
+        name:
+          - dnf-utils
+        state: present
+
+    - name: Add Docker repository
+      get_url:
+        url: https://download.docker.com/linux/centos/docker-ce.repo
+        dest: /etc/yum.repos.d/docker-ce.repo
+
+    - name: Install Docker packages
+      dnf:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-compose-plugin
+        state: present
+        update_cache: yes
+
+    - name: Start and enable Docker service
+      systemd:
+        name: docker
+        enabled: yes
+        state: started
+
+
+
+    - name: Create missing directories
+      file:
+        path: "{{ item.path }}"
+        state: directory
+        mode: '0755'
+        owner: root
+        group: root
+        recurse: "{{ item.recurse }}"
+      loop:
+        - { path: "/etc/docker", recurse: false }
+
+    - name: Docker config
+      template:
+        src: "{{ item.file }}.j2"
+        dest: "{{ item.path }}/{{ item.file }}"
+        mode: '0644'
+        owner: root
+        group: root
+      loop:
+        - { path: "/etc/docker", file: "daemon.json" }
+  when: docker_installed.rc != 0
+
+- name: Add users to docker group
+  user:
+    name: "{{ item }}"
+    groups: docker
+    append: yes
+  loop: "{{ docker_users }}"
+  when:
+    - docker_users is defined and docker_users 
+    
+- name: Restart Docker service
+  systemd:
+    name: docker
+    state: restarted
+    daemon_reload: yes

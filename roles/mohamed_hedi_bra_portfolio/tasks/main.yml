@@ -1,0 +1,13 @@
+--- 
+- name: Creation of config files and docker-compose file
+  template:
+    src: "{{ item.template }}.j2"
+    dest: "{{ item.path }}/{{ item.template }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - { template: mohamed_hedi_bra_portfolio.env , path: "{{ node_home }}", mode: '0644' }
+    - { template: docker_compose_mohamed_hedi_bra_portfolio.yml , path: "{{ node_home }}", mode: '0644' }
+    - { template: mohamed_hedi_bra_portfolio_run.sh , path: "{{ node_home }}", mode: '0777' }
+
+- name: Run the containers
+  command: "bash {{ node_home }}/mohamed_hedi_bra_portfolio_run.sh"

@@ -1,0 +1,5 @@
+docker_users: []
+log_max_size: 10m
+log_max_file: 3
+docker_dns: []
+docker_disable_iptables: false

@@ -1,0 +1,22 @@
+---
+node_home: /root
+
+letsencrypt_root_path: /etc/letsencrypt
+letsencrypt_webroot_path: /var/www/letsencrypt/
+contact_email: mohamedhedibra8@gmail.com
+rsa_key_size: 2048
+nginx_conf_path: /etc/nginx
+gw_proxies: []
+
+certbot_bin: certbot
+certbot_packages: 
+  - certbot
+
+cron_path:
+  - /usr/local/sbin
+  - /usr/local/bin
+  - /sbin
+  - /bin
+  - /usr/sbin
+  - /usr/bin
+  - /root/bin

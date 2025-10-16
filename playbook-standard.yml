@@ -1,0 +1,9 @@
+- hosts: localhost
+  become: true
+  roles:
+    - base-system
+    - common
+    - ssh-keys
+    - firewall
+    - docker
+    

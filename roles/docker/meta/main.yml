@@ -1,0 +1,10 @@
+galaxy_info:
+  role_name: docker
+  author: Mohamed Hedi Bra
+  description: Install and configure docker server
+  license: CC BY-NC-ND
+  min_ansible_version: "2.2"
+  platforms:
+    - name: EL
+      versions:
+        - "9"

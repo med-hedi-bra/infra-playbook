@@ -1,0 +1,10 @@
+galaxy_info:
+  role_name: gw_letsencrypt
+  author: Mohamed Hedi Bra
+  description: Configure letsencrypt renew files for the gateway server
+  license: CC BY-NC-ND
+  min_ansible_version: "2.2"
+  platforms:
+    - name: EL
+      versions:
+        - "9"
