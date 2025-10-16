@@ -1,6 +1,6 @@
 ---
 nofile: 65535
 file_max: 512000
-selinux_status: disabled
+selinux_status: disabled 
 deploy_user: devops
 disable_ipv6: false
