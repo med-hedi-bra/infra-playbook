@@ -11,3 +11,4 @@ firewall_allow:
   - port: 22
   - port: 443
 
+firewall_deny: []
