@@ -12,6 +12,7 @@ sudo_users:
 
 docker_users:
   - devops
+  - gitlab-runner
 
 firewall_allow:
   - port: 80
