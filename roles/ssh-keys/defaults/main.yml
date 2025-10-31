@@ -1,0 +1,8 @@
+---
+ssh_key_user: devops
+ssh_key_group: devops
+
+ssh_public_keys:
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCtrek79eWnkMR/MJ+JoQ+OE9OeYs25jHZ7t9w0+hHOf5EXQEls5St2JvPtLn3qPYqwC7xLZbjoYXM1OLDw74o4dsnp3xyGAXgRVFpKNj1yH2oGZxS5BG63KCw1XEZ9VtMn9AX1bAqxkS3/n3kNMV53rDKXfqvbO+FL9IDzJKKgX+1Wfwh5McH+smNHnwVF0yvIyEsZeiEtXYwfG7fNRpxaHWKCByW7BalS/YKW9cQDUB6+VfZh8yAVjc8SV/zkbM0qNQkFvFAYc75D9d6bfXruhZmO38y5+/i+YtdxOjeFurQZBcKjXfOEaO87fY1/O9H/vIwHbj/iWFf8XhdK0abCng8H0AouoYBm01fU6D8HVJBSTELEaBhYIrzKSEYztzRz0WtALML7dp3YIM3wUV/YS/sv4hwz28w5ISGGtxL9UqWk9vWwnwvXZHG5a2GVRIwgvqZlzlNA9lufhxrd+Jk3lqrjCgb7z5yeSHDCUlkhG4D7uXT5MVuP5TkUDzKJxq0= mohamed@mohamed-GF63-Thin-10SCXR
+
+  
